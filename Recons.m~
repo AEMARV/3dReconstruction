@@ -1,0 +1,10 @@
+function F = fit_fundamental( matches)
+%RECONS Summary of this function goes here
+%   Detailed explanation goes here
+    homMatches = ones()
+
+    % must test the config of matches
+    F = fundmatrix(matches');
+
+end
+
