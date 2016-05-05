@@ -51,35 +51,18 @@ Center2 = null(CameraMat2);
 Center2 = Center2./Center2(4);
 Cents = [Center1(1:3),Center2(1:3)];
 Points3d = bsxfun(@rdivide,Points3d,Points3d(:,4));
-Points3dCorrected = bsxfun(@rdivide,Points3dCorrected,Points3dCorrected(:,4));
-figure;hold on;title('linear'); axis equal
+figure;hold on; axis equal
 plot3(Points3d(:,1),Points3d(:,2),Points3d(:,3),'Marker','.','MarkerFaceColor','r','LineStyle','none');
 plot3(Cents(1,:)',Cents(2,:)',Cents(3,:)','Marker','+','MarkerFaceColor','g','LineStyle','none');
-
-
-figure;hold on;title('Optimal'); axis equal
-plot3(Points3dCorrected(:,1),Points3dCorrected(:,2),Points3dCorrected(:,3),'Marker','.','MarkerFaceColor','r','LineStyle','none');
-plot3(Cents(1,:)',Cents(2,:)',Cents(3,:)','Marker','+','MarkerFaceColor','g','LineStyle','none');
-
-
 
 x1 = ProjectPoints(Points3d',CameraMat1);
 x2 = ProjectPoints(Points3d',CameraMat2);
 
-x1c = ProjectPoints(Points3dCorrected',CameraMat1);
-x2c = ProjectPoints(Points3dCorrected',CameraMat2);
 err1 = calcError(x1(:,1:2),matches(:,1:2));
 err2 = calcError(x2(:,1:2),matches(:,3:4));
 
-err1C = calcError(x1c(:,1:2),correctedMatch(:,1:2));
-err2C = calcError(x2c(:,1:2),correctedMatch(:,3:4));
-
-fprintf('Linear : mean square error of projection in image %s1 :  %d \n',fileNameBase, err1);
-fprintf('Linear : mean square error of projection in image %s2 :  %d \n',fileNameBase, err2);
-fprintf('----------------------------------------------------------- \n');
-fprintf('Optimal : mean square error of projection in image %s1 : %d \n',fileNameBase, err1C);
-fprintf('Optimal : mean square error of projection in image %s2 : %d \n',fileNameBase, err2C);
-fprintf('=========================================================== \n');
+fprintf('Linear : mean square error of projection in image %s1 : %d \n',fileNameBase, err1);
+fprintf('Linear : mean square error of projection in image %s2 : %d \n',fileNameBase, err2);
 end
 function [ dist ] = drawEpipoles(F,matches1,matches2,I2)
 dist = 0;
